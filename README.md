@@ -99,6 +99,20 @@ If you prefer running the application without Docker:
 
 The application includes feature tests to verify the correctness of the API. To execute the tests:
 
+The test suite covers various scenarios, such as:
+
+- Adding items to the registry.
+- Checking item existence.
+- Removing items.
+- Comparing sets using `diff`.
+- Inverting the state of the registry.
+
+### Run Tests with docker
+
+docker-compose exec laravel-app php artisan test
+
+### Run Tests without docker
+
 1. Ensure the testing database is correctly configured in your `.env` file:
 
    ```
@@ -119,13 +133,6 @@ The application includes feature tests to verify the correctness of the API. To 
    ```bash
    ./vendor/bin/phpunit
    ```
-
-3. The test suite covers various scenarios, such as:
-   - Adding items to the registry.
-   - Checking item existence.
-   - Removing items.
-   - Comparing sets using `diff`.
-   - Inverting the state of the registry.
 
 ### Common Testing Issues
 
