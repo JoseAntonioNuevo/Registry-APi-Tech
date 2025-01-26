@@ -142,9 +142,9 @@ The application includes feature tests to verify the correctness of the API. To 
 | ------ | --------------- | -------------------------------------- | ------------------------------------------------------------------------------------ |
 | GET    | `/check/{item}` | Check if an item is in the registry.   | Input: `red`; Output: `{"message": OK}`                                              |
 | POST   | `/add`          | Add an item to the registry.           | Input: `{"item": "yellow"}`; Output: `{"message": "OK"}`                             |
-| POST   | `/remove`       | Remove an item from the registry.      | Input: `{"item": "red"}`; Output: `{"message": "OK"}`                                |
+| DELETE | `/remove`       | Remove an item from the registry.      | Input: `{"item": "red"}`; Output: `{"message": "OK"}`                                |
 | POST   | `/diff`         | Compare the registry with another set. | Input: `{"items": ["red", "green"]}`; Output: `{"message": "OK", "diff": ["green"]}` |
-| POST   | `/invert`       | Invert the registry logic.             | Output: `{"message": "OK"}`                                                          |
+| PUT    | `/invert`       | Invert the registry logic.             | Output: `{"message": "OK"}`                                                          |
 
 ---
 
