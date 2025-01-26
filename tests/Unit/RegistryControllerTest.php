@@ -16,14 +16,14 @@ class RegistryControllerTest extends TestCase
         Item::create(['name' => 'red']);
         $response = $this->get('/api/check/red');
         $response->assertStatus(200);
-        $response->assertJson(['exists' => true]);
+        $response->assertJson(['message' => "OK"]);
     }
 
     public function testCheckItemDoesNotExist()
     {
         $response = $this->get('/api/check/blue');
         $response->assertStatus(200);
-        $response->assertJson(['exists' => false]);
+        $response->assertJson(['message' => "NOT OK"]);
     }
 
     public function testCheckItemWithInversion()
@@ -31,12 +31,12 @@ class RegistryControllerTest extends TestCase
         Inverted::create(['inverted' => true]);
         $response = $this->get('/api/check/red');
         $response->assertStatus(200);
-        $response->assertJson(['exists' => true]);
+        $response->assertJson(['message' => "OK"]);
 
         Item::create(['name' => 'red']);
         $response = $this->get('/api/check/red');
         $response->assertStatus(200);
-        $response->assertJson(['exists' => false]);
+        $response->assertJson(['message' => "NOT OK"]);
     }
 
     public function testAddNewItem()
