@@ -71,8 +71,14 @@ class RegistryController extends Controller
         try {
             $submittedSet = array_map('trim', $this->validateSet($request->input('items')));
             $currentSet = Item::pluck('name')->toArray();
+            $diff = array_values(array_diff($submittedSet, $currentSet));
             DB::commit();
-            return response()->json(['diff' => array_values(array_diff($submittedSet, $currentSet))]);
+
+            if (!empty($diff)) {
+                return response()->json(['message' => 'OK', 'diff' => implode(', ', $diff)]);
+            } else {
+                return response()->json(['message' => 'diff', 'items' => implode(', ', $submittedSet)]);
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error in diff method: ' . $e->getMessage());
@@ -80,7 +86,7 @@ class RegistryController extends Controller
         }
     }
 
-    public function invert()
+        public function invert()
     {
         DB::beginTransaction();
         try {
