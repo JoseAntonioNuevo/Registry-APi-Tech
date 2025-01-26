@@ -1,0 +1,38 @@
+services:
+  # Laravel application
+  laravel-app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - laravel-mysql
+    volumes:
+      - .:/var/www
+      - ./vendor:/var/www/vendor
+      - ./node_modules:/var/www/node_modules
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:YOUR_GENERATED_KEY_HERE
+      - DB_CONNECTION=mysql
+      - DB_HOST=laravel-mysql
+      - DB_PORT=3306
+      - DB_DATABASE=registry_api
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    command: /bin/sh -c "./docker/wait-for-it.sh laravel-mysql:3306 -- php artisan migrate && ./vendor/bin/phpunit --filter RegistryControllerTest && php artisan serve --host=0.0.0.0 --port=8000"
+
+  laravel-mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: registry_api
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata: {}
