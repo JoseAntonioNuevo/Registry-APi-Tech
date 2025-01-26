@@ -1,66 +1,161 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Registry API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository contains a RESTful API for a registry system. The API keeps track of a set of items and provides endpoints to manipulate and query it. The `.env` file has been included in the repository to simplify the setup and usage of the application.
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Registry API](#registry-api)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Setup Instructions](#setup-instructions)
+    - [Prerequisites](#prerequisites)
+    - [Using Docker](#using-docker)
+    - [Running the Application (Manually, without Docker)](#running-the-application-manually-without-docker)
+  - [Running Tests](#running-tests)
+    - [Common Testing Issues](#common-testing-issues)
+  - [Endpoints Overview](#endpoints-overview)
+  - [Notes on the `.env` File](#notes-on-the-env-file)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- **Check** if an item is in the registry.
+- **Add** items to the registry.
+- **Remove** items from the registry.
+- Compare the registry with another set using **diff**.
+- **Invert** the logic of the registry (invert the state of all checks).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Setup Instructions
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+To make onboarding easier, the `.env` file has been provided. It includes all necessary configurations required for the application to run locally.
 
-## Laravel Sponsors
+### Prerequisites
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Ensure you have the following installed:
 
-### Premium Partners
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- PHP (if running without Docker)
+- Composer
+- MySQL (if running without Docker)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Using Docker
 
-## Contributing
+The application is pre-configured for Docker. To spin up the environment:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Build and start the Docker containers:
 
-## Code of Conduct
+   ```bash
+   docker-compose up --build
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. Once the services are up, you can access the application at:
 
-## Security Vulnerabilities
+   ```
+   http://localhost:8000
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. The database service will also be running within Docker. Configuration for the MySQL database (username, password, etc.) is provided in the `.env` file.
 
-## License
+### Running the Application (Manually, without Docker)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+If you prefer running the application without Docker:
+
+1. Install PHP dependencies:
+
+   ```bash
+   composer install
+   ```
+
+2. Configure the `.env` file:
+
+   - The `.env` file already contains example configurations (uploaded for simplicity). Ensure the following fields are correctly set:
+     - `DB_CONNECTION`: Database connection type (e.g., `mysql`).
+     - `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`: Database credentials.
+
+3. Run the migrations to set up the database schema:
+
+   ```bash
+   php artisan migrate
+   ```
+
+4. Start the development server:
+
+   ```bash
+   php artisan serve
+   ```
+
+5. Access the application at:
+   ```
+   http://127.0.0.1:8000
+   ```
+
+---
+
+## Running Tests
+
+The application includes feature tests to verify the correctness of the API. To execute the tests:
+
+1. Ensure the testing database is correctly configured in your `.env` file:
+
+   ```
+   DB_CONNECTION=mysql
+   DB_DATABASE=testing_database
+   DB_USERNAME=root
+   DB_PASSWORD=password
+   ```
+
+2. Run the tests using PHPUnit:
+
+   ```bash
+   php artisan test
+   ```
+
+   Or:
+
+   ```bash
+   ./vendor/bin/phpunit
+   ```
+
+3. The test suite covers various scenarios, such as:
+   - Adding items to the registry.
+   - Checking item existence.
+   - Removing items.
+   - Comparing sets using `diff`.
+   - Inverting the state of the registry.
+
+### Common Testing Issues
+
+- **Database-related errors**: Ensure the testing database is created and migrations are run in the testing environment:
+  ```bash
+  php artisan migrate --env=testing
+  ```
+
+---
+
+## Endpoints Overview
+
+| Method | Endpoint        | Description                            | Example Input / Output                                                               |
+| ------ | --------------- | -------------------------------------- | ------------------------------------------------------------------------------------ |
+| GET    | `/check/{item}` | Check if an item is in the registry.   | Input: `red`; Output: `{"exists": true}`                                             |
+| POST   | `/add`          | Add an item to the registry.           | Input: `{"item": "yellow"}`; Output: `{"message": "OK"}`                             |
+| POST   | `/remove`       | Remove an item from the registry.      | Input: `{"item": "red"}`; Output: `{"message": "OK"}`                                |
+| POST   | `/diff`         | Compare the registry with another set. | Input: `{"items": ["red", "green"]}`; Output: `{"message": "OK", "diff": ["green"]}` |
+| POST   | `/invert`       | Invert the registry logic.             | Output: `{"message": "OK"}`                                                          |
+
+---
+
+## Notes on the `.env` File
+
+To simplify setup for new developers, the `.env` file has been included in the repository. It contains default configurations for the local environment, such as:
+
+- Database credentials.
+- Application key.
+- Docker-based configurations.
+
+**Security Note**: In a production environment, uploading the `.env` file is a security risk. Ensure it is excluded from version control in real-world scenarios by adding it to `.gitignore`.
+
+---
