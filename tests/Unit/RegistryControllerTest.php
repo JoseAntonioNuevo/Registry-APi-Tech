@@ -57,7 +57,7 @@ class RegistryControllerTest extends TestCase
 
     public function testAddInvalidItem()
     {
-        $response = $this->postJson('/api/add', ['item' => '@invalid#']);
+        $response = $this->postJson('/api/add', ['item' => 'blue#']);
         $response->assertStatus(500);
         $response->assertJson(['message' => 'KO']);
     }
@@ -73,14 +73,14 @@ class RegistryControllerTest extends TestCase
 
     public function testRemoveNonExistentItem()
     {
-        $response = $this->deleteJson('/api/remove', ['item' => 'nonexistent']);
+        $response = $this->deleteJson('/api/remove', ['item' => 'purple']);
         $response->assertStatus(200);
         $response->assertJson(['message' => 'OK']);
     }
 
     public function testRemoveInvalidItemName()
     {
-        $response = $this->deleteJson('/api/remove', ['item' => '@invalid#']);
+        $response = $this->deleteJson('/api/remove', ['item' => 'r@d#']);
         $response->assertStatus(500);
         $response->assertJson(['message' => 'KO']);
     }
