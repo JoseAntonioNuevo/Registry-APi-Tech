@@ -148,6 +148,10 @@ The application includes feature tests to verify the correctness of the API. To 
 
 ---
 
+## Postman
+
+I've also included a Postman collection, ready to import into Postman, for easy testing of all the project's endpoints.
+
 ## Notes on the `.env` File
 
 To simplify setup for new developers, the `.env` file has been included in the repository. It contains default configurations for the local environment, such as:
