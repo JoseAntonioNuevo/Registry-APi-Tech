@@ -91,7 +91,10 @@ class RegistryControllerTest extends TestCase
         Item::create(['name' => 'blue']);
         $response = $this->postJson('/api/diff', ['items' => ['red', 'green']]);
         $response->assertStatus(200);
-        $response->assertJson(['diff' => ['green']]);
+        $response->assertJson([
+            'message' => 'OK',
+            'diff' => 'green'
+        ]);
     }
 
     public function testDiffWithEmptySet()
@@ -108,13 +111,16 @@ class RegistryControllerTest extends TestCase
         $response->assertJson(['message' => 'NOT OK']);
     }
 
-    public function testDiffWithDuplicateItemsInSet()
-    {
-        Item::create(['name' => 'red']);
-        $response = $this->postJson('/api/diff', ['items' => ['red', 'red', 'blue']]);
-        $response->assertStatus(200);
-        $response->assertJson(['diff' => ['blue']]);
-    }
+        public function testDiffWithDuplicateItemsInSet()
+        {
+            Item::create(['name' => 'red']);
+            $response = $this->postJson('/api/diff', ['items' => ['red', 'red', 'blue']]);
+            $response->assertStatus(200);
+            $response->assertJson([
+                'message' => 'OK',
+                'diff' => 'blue'
+            ]);
+        }
 
     public function testInvertState()
     {
