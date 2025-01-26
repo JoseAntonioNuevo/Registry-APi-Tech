@@ -1,0 +1,175 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentation for SmartPoint API",
+        "description": "API documentation for SmartPoint API",
+        "contact": {
+            "email": "joseantonionuevo@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/check/{item}": {
+            "get": {
+                "tags": [
+                    "Registry"
+                ],
+                "summary": "Check if an item exists",
+                "operationId": "bbeff3a7acb2c7b8539ee58d7ade301d",
+                "parameters": [
+                    {
+                        "name": "item",
+                        "in": "path",
+                        "description": "The name of the item to check",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "NOT OK"
+                    }
+                }
+            }
+        },
+        "/add": {
+            "post": {
+                "tags": [
+                    "Registry"
+                ],
+                "summary": "Add a new item",
+                "operationId": "a12718afab8835af596ed7aa301ffc8f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "item": {
+                                        "description": "The name of the item to add",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Item already exists"
+                    },
+                    "500": {
+                        "description": "NOT OK"
+                    }
+                }
+            }
+        },
+        "/remove": {
+            "delete": {
+                "tags": [
+                    "Registry"
+                ],
+                "summary": "Remove an item",
+                "operationId": "e5c2e947369b06c5209e51bdd10795bc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "item": {
+                                        "description": "The name of the item to remove",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "NOT OK"
+                    }
+                }
+            }
+        },
+        "/diff": {
+            "post": {
+                "tags": [
+                    "Registry"
+                ],
+                "summary": "Get the difference between submitted and current items",
+                "operationId": "4bae6a1a6851b179dccffaf0ec8350e5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "items": {
+                                        "description": "The list of items to compare",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "NOT OK"
+                    }
+                }
+            }
+        },
+        "/invert": {
+            "put": {
+                "tags": [
+                    "Registry"
+                ],
+                "summary": "Invert the state of the registry",
+                "operationId": "ada33922a5760739fa1ef33c7d4506b3",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "500": {
+                        "description": "NOT OK"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Registry",
+            "description": "Registry"
+        }
+    ]
+}

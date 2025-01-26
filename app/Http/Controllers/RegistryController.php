@@ -2,6 +2,21 @@
 
 namespace App\Http\Controllers;
 
+/**
+ * @OA\Info(
+ *     title="Documentation for SmartPoint API",
+ *     version="1.0.0",
+ *     description="API documentation for SmartPoint API",
+ *     @OA\Contact(
+ *         email="joseantonionuevo@gmail.com"
+ *     )
+ * ),
+ * @OA\Server(
+ *     url="http://localhost:8000/api",
+ *     description="Local server"
+ * )
+ */
+
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Inverted;
@@ -10,7 +25,22 @@ use Illuminate\Support\Facades\Log;
 
 class RegistryController extends Controller
 {
-
+    /**
+     * @OA\Get(
+     *     path="/check/{item}",
+     *     summary="Check if an item exists",
+     *     tags={"Registry"},
+     *     @OA\Parameter(
+     *         name="item",
+     *         in="path",
+     *         required=true,
+     *         description="The name of the item to check",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response=200, description="OK"),
+     *     @OA\Response(response=500, description="NOT OK")
+     * )
+     */
     public function check($item)
     {
         try {
@@ -31,6 +61,22 @@ class RegistryController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/add",
+     *     summary="Add a new item",
+     *     tags={"Registry"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="item", type="string", description="The name of the item to add")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="OK"),
+     *     @OA\Response(response=400, description="Item already exists"),
+     *     @OA\Response(response=500, description="NOT OK")
+     * )
+     */
     public function add(Request $request)
     {
         DB::beginTransaction();
@@ -50,6 +96,21 @@ class RegistryController extends Controller
         }
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/remove",
+     *     summary="Remove an item",
+     *     tags={"Registry"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="item", type="string", description="The name of the item to remove")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="OK"),
+     *     @OA\Response(response=500, description="NOT OK")
+     * )
+     */
     public function remove(Request $request)
     {
         DB::beginTransaction();
@@ -65,6 +126,21 @@ class RegistryController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/diff",
+     *     summary="Get the difference between submitted and current items",
+     *     tags={"Registry"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="items", type="array", @OA\Items(type="string"), description="The list of items to compare")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="OK"),
+     *     @OA\Response(response=500, description="NOT OK")
+     * )
+     */
     public function diff(Request $request)
     {
         DB::beginTransaction();
@@ -86,7 +162,16 @@ class RegistryController extends Controller
         }
     }
 
-        public function invert()
+    /**
+     * @OA\Put(
+     *     path="/invert",
+     *     summary="Invert the state of the registry",
+     *     tags={"Registry"},
+     *     @OA\Response(response=200, description="OK"),
+     *     @OA\Response(response=500, description="NOT OK")
+     * )
+     */
+    public function invert()
     {
         DB::beginTransaction();
         try {
