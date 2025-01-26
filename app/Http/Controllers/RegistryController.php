@@ -54,7 +54,7 @@ class RegistryController extends Controller
                 $exists = !$exists;
             }
 
-            return response()->json(['exists' => $exists]);
+            return response()->json(['exists' => $exists ? "OK" : "NOT OK"]);
         } catch (\Exception $e) {
             Log::error('Error in check method: ' . $e->getMessage());
             return response()->json(['message' => 'NOT OK'], 500);
