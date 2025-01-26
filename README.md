@@ -12,8 +12,11 @@ This repository contains a RESTful API for a registry system. The API keeps trac
     - [Using Docker](#using-docker)
     - [Running the Application (Manually, without Docker)](#running-the-application-manually-without-docker)
   - [Running Tests](#running-tests)
-    - [Common Testing Issues](#common-testing-issues)
+    - [Run Tests with docker](#run-tests-with-docker)
+    - [Run Tests without docker](#run-tests-without-docker)
+  - [Swagger Documentation](#swagger-documentation)
   - [Endpoints Overview](#endpoints-overview)
+  - [Postman](#postman)
   - [Notes on the `.env` File](#notes-on-the-env-file)
 
 ---
@@ -134,14 +137,9 @@ docker-compose exec laravel-app php artisan test
    ./vendor/bin/phpunit
    ```
 
-### Common Testing Issues
+## Swagger Documentation
 
-- **Database-related errors**: Ensure the testing database is created and migrations are run in the testing environment:
-  ```bash
-  php artisan migrate --env=testing
-  ```
-
----
+I use Swagger to document all the code, you can access at http://localhost:8000/api/documentation/
 
 ## Endpoints Overview
 
