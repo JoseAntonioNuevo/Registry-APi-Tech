@@ -27,7 +27,7 @@ class RegistryController extends Controller
             return response()->json(['exists' => $exists]);
         } catch (\Exception $e) {
             Log::error('Error in check method: ' . $e->getMessage());
-            return response()->json(['message' => 'KO'], 500);
+            return response()->json(['message' => 'NOT OK'], 500);
         }
     }
 
@@ -46,7 +46,7 @@ class RegistryController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error in add method: ' . $e->getMessage());
-            return response()->json(['message' => 'KO'], 500);
+            return response()->json(['message' => 'NOT OK'], 500);
         }
     }
 
@@ -61,7 +61,7 @@ class RegistryController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error in remove method: ' . $e->getMessage());
-            return response()->json(['message' => 'KO'], 500);
+            return response()->json(['message' => 'NOT OK'], 500);
         }
     }
 
@@ -76,7 +76,7 @@ class RegistryController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error in diff method: ' . $e->getMessage());
-            return response()->json(['message' => 'KO'], 500);
+            return response()->json(['message' => 'NOT OK'], 500);
         }
     }
 
@@ -97,7 +97,7 @@ class RegistryController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error in invert method: ' . $e->getMessage());
-            return response()->json(['message' => 'KO'], 500);
+            return response()->json(['message' => 'NOT OK'], 500);
         }
     }
 

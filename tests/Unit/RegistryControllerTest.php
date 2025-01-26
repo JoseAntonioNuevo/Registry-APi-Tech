@@ -59,7 +59,7 @@ class RegistryControllerTest extends TestCase
     {
         $response = $this->postJson('/api/add', ['item' => 'blue#']);
         $response->assertStatus(500);
-        $response->assertJson(['message' => 'KO']);
+        $response->assertJson(['message' => 'NOT OK']);
     }
 
     public function testRemoveItem()
@@ -82,7 +82,7 @@ class RegistryControllerTest extends TestCase
     {
         $response = $this->deleteJson('/api/remove', ['item' => 'r@d#']);
         $response->assertStatus(500);
-        $response->assertJson(['message' => 'KO']);
+        $response->assertJson(['message' => 'NOT OK']);
     }
 
     public function testDiffItems()
@@ -98,14 +98,14 @@ class RegistryControllerTest extends TestCase
     {
         $response = $this->postJson('/api/diff', ['items' => []]);
         $response->assertStatus(500);
-        $response->assertJson(['message' => 'KO']);
+        $response->assertJson(['message' => 'NOT OK']);
     }
 
     public function testDiffWithInvalidFormat()
     {
         $response = $this->postJson('/api/diff', ['items' => 'invalid string']);
         $response->assertStatus(500);
-        $response->assertJson(['message' => 'KO']);
+        $response->assertJson(['message' => 'NOT OK']);
     }
 
     public function testDiffWithDuplicateItemsInSet()
