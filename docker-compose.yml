@@ -20,7 +20,7 @@ services:
       - DB_DATABASE=registry_api
       - DB_USERNAME=root
       - DB_PASSWORD=root
-    command: /bin/sh -c "composer install && php artisan migrate && php artisan serve --host=0.0.0.0 --port=8000"
+    command: /bin/sh -c "./docker/wait-for-it.sh laravel-mysql:3306 -- composer install && php artisan migrate && php artisan serve --host=0.0.0.0 --port=8000"
 
   laravel-mysql:
     image: mysql:8.0
